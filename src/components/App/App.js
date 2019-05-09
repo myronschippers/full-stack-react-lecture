@@ -24,9 +24,24 @@ class App extends Component {
     });
   }
 
+  deleteSong = (event) => {
+    console.log(event.target);
+    const songIndex = event.target.dataset.id;
+    const songId = this.state.songs[songIndex].id;
+    axios.delete(`/songs/${songId}`)
+      .then((response) => {
+        this.getSongs();
+      }).catch();
+  }
+
   render() {
     const htmlSongs = this.state.songs.map((indvSong, i) => {
-      return <p key={i}>{indvSong.track} by {indvSong.artist}</p>;
+      return (
+        <p key={i}>
+          {indvSong.track} by {indvSong.artist}
+          <button data-id={i} data-rank={indvSong.rank} onClick={this.deleteSong}>Delete</button>
+        </p>
+      );
     });
 
     return (
