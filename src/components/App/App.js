@@ -4,6 +4,12 @@ import axios from 'axios';
 
 class App extends Component {
   state = {
+    newSong: {
+      track: '',
+      artist: '',
+      published: '',
+      rank: '',
+    },
     songs: [],
   }
   componentDidMount() {
@@ -24,6 +30,27 @@ class App extends Component {
     });
   }
 
+  postSong(newSong) {
+    axios.post('/songs', newSong)
+      .then((response) => {
+        console.log('response: ', response);
+        this.clearInputs();
+        this.getSongs();
+      })
+
+  }
+
+  clearInputs() {
+    this.setState({
+      newSong: {
+        track: '',
+        artist: '',
+        published: '',
+        rank: '',
+      }
+    });
+  }
+
   deleteSong = (event) => {
     console.log(event.target);
     const songIndex = event.target.dataset.id;
@@ -32,6 +59,28 @@ class App extends Component {
       .then((response) => {
         this.getSongs();
       }).catch();
+  }
+
+  newSongData = (event) => {
+    let inputValue = event.target.value;
+    const propertyKey = event.target.getAttribute('name');
+
+    if (propertyKey == 'rank') {
+      inputValue = parseInt(inputValue);
+    }
+
+    this.setState({
+      newSong: {
+        ...this.state.newSong,
+        [propertyKey]: inputValue
+      }
+    });
+    console.log('newSong', this.state.newSong);
+  }
+
+  saveNewSong = (event) => {
+    const newSong = this.state.newSong;
+    this.postSong(newSong);
   }
 
   render() {
@@ -49,6 +98,38 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Songs!</h1>
         </header>
+        <h3>New Song</h3>
+        <input
+          type="text"
+          name="artist"
+          placeholder="Artist"
+          value={this.state.artist}
+          onChange={this.newSongData}
+        />
+        <input
+          type="text"
+          name="track"
+          placeholder="Track"
+          value={this.state.track}
+          onChange={this.newSongData}
+        />
+        <input
+          type="text"
+          name="published"
+          placeholder="Published"
+          value={this.state.published}
+          onChange={this.newSongData}
+        />
+        <input
+          type="text"
+          name="rank"
+          placeholder="Rank"
+          value={this.state.rank}
+          onChange={this.newSongData}
+        />
+        <br />
+        <button onClick={this.saveNewSong}>Add New Song</button>
+        
         <br/>
         {htmlSongs}
       </div>
