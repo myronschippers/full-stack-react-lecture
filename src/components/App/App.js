@@ -86,10 +86,24 @@ class App extends Component {
   render() {
     const htmlSongs = this.state.songs.map((indvSong, i) => {
       return (
-        <p key={i}>
-          {indvSong.track} by {indvSong.artist}
-          <button data-id={i} data-rank={indvSong.rank} onClick={this.deleteSong}>Delete</button>
-        </p>
+        <div className="col-6" key={i}>
+          <div className="alert alert-secondary text-left">
+            <h3 className="border-bottom border-secondary">{indvSong.track}</h3>
+            <div>
+              <div>Artist: {indvSong.artist}</div>
+              <div>Rank: {indvSong.rank}</div>
+              <div>Published: {indvSong.published}</div>
+            </div>
+
+            <button className="btn btn-danger"
+              data-id={i}
+              data-rank={indvSong.rank}
+              onClick={this.deleteSong}
+            >
+              Delete
+            </button>
+          </div>
+        </div>
       );
     });
 
@@ -99,39 +113,58 @@ class App extends Component {
           <h1 className="App-title">Songs!</h1>
         </header>
         <h3>New Song</h3>
-        <input
-          type="text"
-          name="artist"
-          placeholder="Artist"
-          value={this.state.artist}
-          onChange={this.newSongData}
-        />
-        <input
-          type="text"
-          name="track"
-          placeholder="Track"
-          value={this.state.track}
-          onChange={this.newSongData}
-        />
-        <input
-          type="text"
-          name="published"
-          placeholder="Published"
-          value={this.state.published}
-          onChange={this.newSongData}
-        />
-        <input
-          type="text"
-          name="rank"
-          placeholder="Rank"
-          value={this.state.rank}
-          onChange={this.newSongData}
-        />
-        <br />
-        <button onClick={this.saveNewSong}>Add New Song</button>
+
+        <div className="container margin-bottom">
+          <div className="row">  
+            <div className="col-4">
+              <input
+                className="form-control form-control-lg"
+                type="text"
+                name="artist"
+                placeholder="Artist"
+                value={this.state.artist}
+                onChange={this.newSongData}
+              />
+            </div>
+            <div className="col-4">
+              <input
+                className="form-control form-control-lg"
+                type="text"
+                name="track"
+                placeholder="Track"
+                value={this.state.track}
+                onChange={this.newSongData}
+              />
+            </div>
+            <div className="col-4">
+              <input
+                className="form-control form-control-lg"
+                type="text"
+                name="published"
+                placeholder="Published"
+                value={this.state.published}
+                onChange={this.newSongData}
+              />
+            </div>
+            <div className="col-4">
+              <input
+                className="form-control form-control-lg"
+                type="text"
+                name="rank"
+                placeholder="Rank"
+                value={this.state.rank}
+                onChange={this.newSongData}
+              />
+            </div>
+          </div>
+          <button onClick={this.saveNewSong} className="btn btn-primary">Add New Song</button>
+        </div>
         
-        <br/>
-        {htmlSongs}
+        <div className="container">
+          <div className="row">
+            {htmlSongs}
+          </div>
+        </div>
       </div>
     );
   }
