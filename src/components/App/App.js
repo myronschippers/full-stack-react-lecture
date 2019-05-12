@@ -87,21 +87,23 @@ class App extends Component {
     const htmlSongs = this.state.songs.map((indvSong, i) => {
       return (
         <div className="col-6" key={i}>
-          <div className="alert alert-secondary text-left">
-            <h3 className="border-bottom border-secondary">{indvSong.track}</h3>
-            <div>
-              <div>Artist: {indvSong.artist}</div>
-              <div>Rank: {indvSong.rank}</div>
-              <div>Published: {indvSong.published}</div>
-            </div>
+          <div className="card text-left">
+            <div className="card-body">
+              <h3 className="card-title">{indvSong.track}</h3>
+              <p className="card-subtitle text-right mb-2 text-muted">~ by {indvSong.artist}</p>
+              <div className="card-text">
+                <div>Rank: {indvSong.rank}</div>
+                <div>Published: {indvSong.published}</div>
+              </div>
 
-            <button className="btn btn-danger"
-              data-id={i}
-              data-rank={indvSong.rank}
-              onClick={this.deleteSong}
-            >
-              Delete
-            </button>
+              <button className="btn btn-danger"
+                data-id={i}
+                data-rank={indvSong.rank}
+                onClick={this.deleteSong}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
       );
